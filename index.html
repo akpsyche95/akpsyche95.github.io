@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK PSYCHE | Psicología Sanitaria & Terapia Bilingüe</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Italiana, Marcellus, Cormorant Garamond, Lustria & Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lustria&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/athena" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/quincy-cf" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/migra" rel="stylesheet">
+    
+    <!-- Tailwind Config Script -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              twilight: '#4A2E37',
+              dusk: '#7A4B57',
+              terracotta: '#B56A56',
+              sunset: '#D88F6A',
+              peachy: '#EBC7B3',
+              morning: '#F6E7D8',
+              velvet: '#B77D77',
+              cream: '#FBF8F4',
+              sand: '#F4ECE4'
+            },
+            fontFamily: {
+              serif: ['Cormorant Garamond', 'serif'],
+              nira: ['Italiana', 'Marcellus', 'serif'],
+              athena: ['Athena', 'Cormorant Garamond', 'serif'],
+              ansam: ['Ansam', 'Athena', 'Cormorant Garamond', 'serif'],
+              quincy: ['Quincy CF', 'Quincy', 'Cormorant Garamond', 'serif'],
+              lejour: ['Le Jour Serif', 'Le Jour', 'Cormorant Garamond', 'serif'],
+              migra: ['Migra', 'Migra Extra Light', 'Cormorant Garamond', 'serif'],
+              lustria: ['Lustria', 'serif'],
+              sans: ['Open Sans', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'Le Jour Serif';
+            src: url('https://db.onlinewebfonts.com/t/0fc59c9e01146174219b63566981f325.woff2') format('woff2'),
+                 url('https://db.onlinewebfonts.com/t/0fc59c9e01146174219b63566981f325.woff') format('woff');
+            font-display: swap;
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -3px;
+            left: 50%;
+            background-color: #4A2E37;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .glass-card {
+            background: rgba(251, 248, 244, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(235, 199, 179, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-cream text-stone-800 font-sans antialiased selection:bg-peachy selection:text-twilight flex flex-col min-h-screen">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-twilight text-white px-6 py-3 rounded-xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3">
+        <svg class="w-5 h-5 text-sunset" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toast-message">Mensaje enviado correctamente</span>
+    </div>
+
+    <!-- HEADER / NAVEGACIÓN PRINCIPAL -->
+    <header class="bg-cream border-b border-peachy/30 sticky top-0 z-40 relative">
+        
+        <!-- SELECTOR DE IDIOMA EN LA ESQUINA SUPERIOR DERECHA -->
+        <div class="absolute top-2.5 sm:top-3 right-4 sm:right-6 z-50">
+            <div class="inline-flex items-center rounded-full bg-sand border border-peachy/40 p-0.5 text-xs font-medium text-twilight">
+                <button onclick="window.switchLanguage('es')" id="btn-lang-es" class="px-2.5 py-1 rounded-full transition-all duration-200 bg-cream text-twilight font-semibold shadow-xs">ES</button>
+                <button onclick="window.switchLanguage('en')" id="btn-lang-en" class="px-2.5 py-1 rounded-full transition-all duration-200 hover:text-twilight">EN</button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+            <!-- MENÚ HORIZONTAL CON LOGO EN DOS LÍNEAS CENTRADO EN MEDIO -->
+            <nav class="flex items-center justify-center">
+                <div class="flex items-center justify-center flex-wrap gap-x-6 sm:gap-x-10 md:gap-x-12 gap-y-3 font-lustria text-xs sm:text-sm tracking-wider text-stone-700">
+                    
+                    <!-- BLOQUE IZQUIERDA -->
+                    <button onclick="window.showPage('inicio')" id="nav-inicio" class="nav-link capitalize hover:text-twilight active">Inicio</button>
+                    <button onclick="window.showPage('sobre-mi')" id="nav-sobre-mi" class="nav-link capitalize hover:text-twilight">Sobre mí</button>
+                    <button onclick="window.showPage('terapia')" id="nav-terapia" class="nav-link capitalize hover:text-twilight">Terapia</button>
+
+                    <!-- MARCA CENTRADA EN 2 LÍNEAS (ESTILO NIRA / ITALIANA) -->
+                    <div class="text-center cursor-pointer px-2 sm:px-4 my-1 sm:my-0 group" onclick="window.showPage('inicio')">
+                        <span class="block font-nira text-twilight font-light text-2xl sm:text-3xl md:text-4xl tracking-[0.25em] leading-none transition-colors duration-300 group-hover:text-terracotta">
+                            AK
+                        </span>
+                        <span class="block font-nira text-dusk font-normal text-[9px] sm:text-[10px] md:text-xs tracking-[0.45em] uppercase leading-tight mt-1 transition-colors duration-300 group-hover:text-sunset">
+                            PSYCHE
+                        </span>
+                    </div>
+
+                    <!-- BLOQUE DERECHA -->
+                    <button onclick="window.showPage('seminarios')" id="nav-seminarios" class="nav-link capitalize hover:text-twilight">Seminarios</button>
+                    <button onclick="window.showPage('faq')" id="nav-faq" class="nav-link uppercase hover:text-twilight">FAQ</button>
+                    <button onclick="window.showPage('contacto')" id="nav-contacto" class="nav-link capitalize hover:text-twilight">Contacto</button>
+
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL (SPA SECTIONS) -->
+    <main class="flex-grow">
+        
+        <!-- ================= PÁGINA: INICIO ================= -->
+        <section id="inicio" class="page-section active">
+            
+            <!-- Hero Banner sutil y refinado -->
+            <div class="w-full relative overflow-hidden pt-16 pb-8 sm:pt-24 sm:pb-12 md:pt-28 md:pb-16 bg-gradient-to-b from-morning/80 via-peachy/40 to-cream border-b border-peachy/20">
+                <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-peachy/40 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                    <div class="relative inline-block mx-auto mb-12">
+                        <div class="absolute -inset-4 bg-cream/60 blur-xl rounded-full pointer-events-none"></div>
+                        <h1 class="font-migra relative max-w-4xl mx-auto leading-tight">
+                            <span class="block text-4xl sm:text-5xl md:text-6xl text-twilight font-extralight tracking-wide" data-key="hero-line1">Terapia Psicológica</span>
+                            <span class="block text-xl sm:text-2xl md:text-3xl text-dusk font-extralight italic tracking-[0.2em] mt-3 opacity-95" data-key="hero-line2">Adaptada a ti</span>
+                        </h1>
+                    </div>
+
+                    <!-- 3 Secciones descriptivas -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto text-center">
+                        <div class="glass-card p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 text-center flex flex-col justify-between">
+                            <div>
+                                <h2 class="font-migra text-base sm:text-lg text-twilight font-medium tracking-wider uppercase" data-key="card1-title">Situación personal</h2>
+                                <div class="w-16 h-px bg-twilight/25 mx-auto my-3"></div>
+                                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="card1-desc">Atención centrada en tus necesidades específicas y únicas.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 text-center flex flex-col justify-between">
+                            <div>
+                                <h2 class="font-migra text-base sm:text-lg text-twilight font-medium tracking-wider uppercase" data-key="card2-title">País e idioma</h2>
+                                <div class="w-16 h-px bg-twilight/25 mx-auto my-3"></div>
+                                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="card2-desc">Sesiones en inglés y español, tanto online como presenciales en Madrid, España.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 text-center flex flex-col justify-between">
+                            <div>
+                                <h2 class="font-migra text-base sm:text-lg text-twilight font-medium tracking-wider uppercase" data-key="card3-title">Cultura</h2>
+                                <div class="w-16 h-px bg-twilight/25 mx-auto my-3"></div>
+                                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="card3-desc">Apertura y sensibilidad a diversidad de contextos e ideologías</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: PRESENTACIÓN BREVE (Fuera del banner) -->
+            <div class="bg-cream py-8 sm:py-12 border-b border-peachy/20">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 text-center">
+                    
+                    <!-- Foto (Izquierda) - Tamaño ampliado -->
+                    <div class="w-40 h-52 sm:w-48 sm:h-64 shrink-0 bg-sand border border-peachy/40 rounded-2xl flex items-center justify-center shadow-sm transition-all duration-300 hover:shadow-md">
+                        <span class="text-[10px] sm:text-xs text-twilight/60 font-medium uppercase tracking-widest text-center px-2 leading-relaxed">Espacio<br>foto</span>
+                    </div>
+                    
+                    <!-- Texto y Botones (Derecha) -->
+                    <div class="flex flex-col items-center max-w-lg">
+                        <h2 class="font-migra text-2xl sm:text-3xl text-twilight font-light mb-2" data-key="home-name">Alexia Kelsey, Psicóloga Sanitaria Bilingüe</h2>
+                        <p class="text-[10px] text-twilight/80 font-medium tracking-[0.2em] uppercase mb-3">Nº Colegiada: M-XXXX</p>
+                        <p class="text-xs sm:text-sm text-stone-600 font-light leading-relaxed mb-6" data-key="home-short-bio">
+                            Especializada en población adulta de diversidad cultural, en terapia individual y de pareja.
+                        </p>
+                        
+                        <!-- Botones de acción combinados -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                            <button onclick="window.showPage('sobre-mi')" class="w-full sm:w-auto px-8 py-2.5 rounded-full bg-sand border border-peachy/50 text-twilight hover:bg-peachy/50 transition-all duration-300 text-[11px] sm:text-xs tracking-widest uppercase font-medium shadow-xs whitespace-nowrap">
+                                <span data-key="btn-know-more">Sobre mí</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SECCIÓN 1: ÁREAS DE ACOMPAÑAMIENTO -->
+            <div id="especialidades" class="bg-sand/60 py-16 sm:py-24 border-b border-peachy/20">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-14">
+                        <span class="font-nira text-xs text-terracotta uppercase tracking-[0.3em] block mb-2" data-key="areas-tag">Especialidades</span>
+                        <h2 class="font-migra text-3xl sm:text-4xl text-twilight font-light" data-key="areas-title">¿En qué puedo acompañarte?</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                        
+                        <!-- Tarjeta 1: Cultural -->
+                        <div class="bg-cream p-8 rounded-2xl border border-peachy/30 shadow-xs hover:border-terracotta/40 transition-all duration-300">
+                            <h3 class="font-migra text-xl text-twilight font-medium mb-3" data-key="area1-title">Psicología intercultural</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="area1-desc">Identidad, pertenencia, duelo migratorio, choque cultural & parejas/familias multiculturales.</p>
+                        </div>
+
+                        <!-- Tarjeta 2: Ansiedad y depresión -->
+                        <div class="bg-cream p-8 rounded-2xl border border-peachy/30 shadow-xs hover:border-terracotta/40 transition-all duration-300">
+                            <h3 class="font-migra text-xl text-twilight font-medium mb-3" data-key="area2-title">Ansiedad y depresión</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="area2-desc">Herramientas para comprender el malestar, reducir la sobrecarga mental y recuperar el equilibrio emocional.</p>
+                        </div>
+
+                        <!-- Tarjeta 3: Vínculos & Autoestima -->
+                        <div class="bg-cream p-8 rounded-2xl border border-peachy/30 shadow-xs hover:border-terracotta/40 transition-all duration-300">
+                            <h3 class="font-migra text-xl text-twilight font-medium mb-3" data-key="area3-title">Vínculos & Autoestima</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="area3-desc">Fortalecimiento de la relación contigo y con los demás desde el respeto y la autocompasión.</p>
+                        </div>
+
+                        <!-- Tarjeta 4: Transiciones Vitales -->
+                        <div class="bg-cream p-8 rounded-2xl border border-peachy/30 shadow-xs hover:border-terracotta/40 transition-all duration-300">
+                            <h3 class="font-migra text-xl text-twilight font-medium mb-3" data-key="area4-title">Transiciones Vitales</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="area4-desc">Acompañamiento en cambios importantes de vida, decisiones complejas y búsqueda de sentido.</p>
+                        </div>
+
+                        <!-- Tarjeta 5: Relaciones familiares & pareja -->
+                        <div class="bg-cream p-8 rounded-2xl border border-peachy/30 shadow-xs hover:border-terracotta/40 transition-all duration-300">
+                            <h3 class="font-migra text-xl text-twilight font-medium mb-3" data-key="area5-title">Relaciones familiares & pareja</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="area5-desc">Abordaje de dinámicas relacionales complejas, comunicación asertiva y resolución de conflictos.</p>
+                        </div>
+
+                        <!-- Tarjeta 6: Etapa perinatal -->
+                        <div class="bg-cream p-8 rounded-2xl border border-peachy/30 shadow-xs hover:border-terracotta/40 transition-all duration-300">
+                            <h3 class="font-migra text-xl text-twilight font-medium mb-3" data-key="area6-title">Etapa perinatal</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light" data-key="area6-desc">Acompañamiento psicológico durante el embarazo, posparto y en los desafíos de la maternidad/paternidad.</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: CÓMO EMPEZAR (3 PASOS) -->
+            <div id="como-empezar" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 border-b border-peachy/20">
+                <div class="text-center mb-14">
+                    <span class="font-nira text-xs text-terracotta uppercase tracking-[0.3em] block mb-2" data-key="process-tag">El proceso</span>
+                    <h2 class="font-migra text-3xl sm:text-4xl text-twilight font-light" data-key="process-title">Cómo empezamos a trabajar</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">
+                    <div class="p-6 rounded-2xl bg-sand border border-peachy/30 shadow-xs hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-full bg-morning text-twilight font-nira text-base flex items-center justify-center mx-auto mb-4 font-semibold border border-peachy/50">1</div>
+                        <h3 class="font-migra text-lg text-twilight font-medium mb-2" data-key="step1-title">Primer contacto</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed font-light" data-key="step1-desc">Escríbeme un mensaje para resolver tus dudas o agendar una consulta inicial sin compromiso.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-sand border border-peachy/30 shadow-xs hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-full bg-morning text-twilight font-nira text-base flex items-center justify-center mx-auto mb-4 font-semibold border border-peachy/50">2</div>
+                        <h3 class="font-migra text-lg text-twilight font-medium mb-2" data-key="step2-title">Evaluación inicial</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed font-light" data-key="step2-desc">Exploramos tu situación actual, lo que necesitas y cómo podemos trabajar juntas/os.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-sand border border-peachy/30 shadow-xs hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-full bg-morning text-twilight font-nira text-base flex items-center justify-center mx-auto mb-4 font-semibold border border-peachy/50">3</div>
+                        <h3 class="font-migra text-lg text-twilight font-medium mb-2" data-key="step3-title">Proceso a tu ritmo</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed font-light" data-key="step3-desc">Diseñamos un plan terapéutico flexible, adaptado a tus metas personales e idioma preferido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4: CALL TO ACTION FINAL -->
+            <div class="bg-gradient-to-r from-morning/40 via-peachy/30 to-morning/40 py-16 sm:py-20">
+                <div class="max-w-3xl mx-auto px-4 text-center">
+                    <h2 class="font-migra text-2xl sm:text-3xl text-twilight font-light mb-4" data-key="cta-title">¿Da el primer paso hacia tu bienestar?</h2>
+                    <p class="text-xs sm:text-sm text-stone-600 font-light mb-8" data-key="cta-subtitle">Sesiones disponibles en español e inglés, en modalidad online y presencial en Madrid.</p>
+                    <button onclick="window.showPage('contacto')" class="px-8 py-3 rounded-full bg-twilight text-white hover:bg-terracotta transition-all duration-300 text-xs tracking-widest uppercase font-medium shadow-md">
+                        <span data-key="cta-btn">Agendar consulta</span>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= PÁGINA: SOBRE MÍ ================= -->
+        <section id="sobre-mi" class="page-section">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div class="text-center mb-12">
+                    <h1 class="font-migra text-4xl sm:text-5xl text-twilight font-light mb-4">Sobre mí</h1>
+                    <p class="text-stone-600 text-sm sm:text-base font-light">Psicóloga Sanitaria Colegiada & Terapeuta Intercultural</p>
+                </div>
+
+                <!-- Tarjetas fonéticas AK / PSYCHE -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                    <div class="bg-sand p-6 rounded-2xl border border-peachy/40">
+                        <span class="font-nira text-3xl text-twilight font-light block mb-1">AK</span>
+                        <span class="text-xs text-dusk font-mono block mb-3">/'eɪ.keɪ/</span>
+                        <p class="text-xs text-stone-600 leading-relaxed font-light">Iniciales profesionales que representan rigor sanitario, compromiso ético e identidad terapéutica personalizada.</p>
+                    </div>
+                    <div class="bg-sand p-6 rounded-2xl border border-peachy/40">
+                        <span class="font-nira text-3xl text-twilight font-light block mb-1">PSYCHE</span>
+                        <span class="text-xs text-dusk font-mono block mb-3">/saɪ.ki/</span>
+                        <p class="text-xs text-stone-600 leading-relaxed font-light">Del griego clásico: alma, mente y aliento vital. La esencia de la psicología centrada en el ser humano.</p>
+                    </div>
+                </div>
+
+                <div class="prose prose-stone mx-auto text-stone-600 text-sm sm:text-base leading-relaxed font-light space-y-4">
+                    <p>Mi práctica clínica se enfoca en ofrecer una atención personalizada, bilingüe e integradora. Entiendo el proceso terapéutico como un puente seguro entre la mente, las emociones y el contexto cultural de cada persona.</p>
+                    <p>A través de un enfoque basado en la evidencia y empático, acompaño a adultos e inmigrantes en la adaptación, la superación del malestar emocional y el florecimiento personal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA: TERAPIA ================= -->
+        <section id="terapia" class="page-section">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div class="text-center mb-12">
+                    <h1 class="font-migra text-4xl sm:text-5xl text-twilight font-light mb-4">Modalidades de Terapia</h1>
+                    <p class="text-stone-600 text-sm sm:text-base font-light">Servicios individualizados presenciales y online</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 rounded-2xl border border-peachy/30 bg-sand shadow-xs">
+                        <h2 class="font-migra text-2xl text-twilight mb-3">Terapia Online</h2>
+                        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light mb-6">Sesiones por videollamada segura con flexibilidad horaria y desde la comodidad de tu espacio, ideal para personas en movilidad o residentes en el extranjero.</p>
+                        <span class="inline-block text-xs font-semibold text-terracotta uppercase tracking-wider">Español & English</span>
+                    </div>
+
+                    <div class="p-8 rounded-2xl border border-peachy/30 bg-sand shadow-xs">
+                        <h2 class="font-migra text-2xl text-twilight mb-3">Terapia Presencial</h2>
+                        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed font-light mb-6">Atención directa en consulta privada ubicada en Madrid, España, en un entorno confidencial, sereno y confortable.</p>
+                        <span class="inline-block text-xs font-semibold text-terracotta uppercase tracking-wider">Madrid, España</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA: SEMINARIOS ================= -->
+        <section id="seminarios" class="page-section">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div class="text-center mb-12">
+                    <h1 class="font-migra text-4xl sm:text-5xl text-twilight font-light mb-4">Seminarios & Talleres</h1>
+                    <p class="text-stone-600 text-sm sm:text-base font-light">Espacios grupales de formación, psicoeducación y reflexión</p>
+                </div>
+
+                <div class="bg-sand p-8 rounded-2xl border border-peachy/40 text-center max-w-xl mx-auto">
+                    <p class="text-sm text-stone-600 font-light mb-4">Próximos talleres e intervenciones grupales sobre salud mental intercultural, gestión del estrés y procesos migratorios.</p>
+                    <span class="inline-block px-4 py-2 rounded-full bg-peachy/40 text-twilight text-xs font-medium border border-peachy/50">Próximas fechas por anunciar</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA: FAQ ================= -->
+        <section id="faq" class="page-section">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div class="text-center mb-12">
+                    <h1 class="font-migra text-4xl sm:text-5xl text-twilight font-light mb-4">FAQ</h1>
+                    <p class="text-stone-600 text-sm sm:text-base font-light">Preguntas frecuentes sobre la terapia</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-sand p-6 rounded-2xl border border-peachy/30">
+                        <h3 class="font-migra text-lg text-twilight font-medium mb-2">¿Cómo es la primera sesión?</h3>
+                        <p class="text-xs sm:text-sm text-stone-600 font-light leading-relaxed">Es una toma de contacto inicial donde exploramos tus motivos de consulta, resolvemos tus preguntas y definimos cómo orientar la intervención a tu medida.</p>
+                    </div>
+
+                    <div class="bg-sand p-6 rounded-2xl border border-peachy/30">
+                        <h3 class="font-migra text-lg text-twilight font-medium mb-2">¿En qué idioma se realizan las sesiones?</h3>
+                        <p class="text-xs sm:text-sm text-stone-600 font-light leading-relaxed">Las sesiones pueden realizarse indistintamente en español o en inglés según tu preferencia y comodidad comunicativa.</p>
+                    </div>
+
+                    <div class="bg-sand p-6 rounded-2xl border border-peachy/30">
+                        <h3 class="font-migra text-lg text-twilight font-medium mb-2">¿Cuál es la política de cancelación?</h3>
+                        <p class="text-xs sm:text-sm text-stone-600 font-light leading-relaxed">Se solicita avisar con al menos 24 horas de antelación para reprogramar la cita sin coste adicional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA: CONTACTO ================= -->
+        <section id="contacto" class="page-section">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                <div class="text-center mb-12">
+                    <h1 class="font-migra text-4xl sm:text-5xl text-twilight font-light mb-4">Contacto</h1>
+                    <p class="text-stone-600 text-sm sm:text-base font-light">Envíame un mensaje o solicita tu primera consulta</p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); window.showToast('Mensaje enviado correctamente');" class="bg-sand p-8 rounded-2xl border border-peachy/40 space-y-6 shadow-xs">
+                    <div>
+                        <label class="block text-xs font-medium text-stone-700 uppercase tracking-wider mb-2">Nombre completo</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-peachy/40 bg-cream focus:outline-none focus:border-terracotta text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-stone-700 uppercase tracking-wider mb-2">Correo electrónico</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl border border-peachy/40 bg-cream focus:outline-none focus:border-terracotta text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-stone-700 uppercase tracking-wider mb-2">Mensaje o consulta</label>
+                        <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-peachy/40 bg-cream focus:outline-none focus:border-terracotta text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-twilight text-white font-medium hover:bg-terracotta transition-colors text-xs uppercase tracking-widest">
+                        Enviar mensaje
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-sand border-t border-peachy/30 py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="mb-4">
+                <span class="font-nira text-twilight font-light text-xl tracking-[0.2em]">AK</span>
+                <span class="font-nira text-dusk font-normal text-[10px] tracking-[0.4em] uppercase block">PSYCHE</span>
+            </div>
+            <p class="text-xs text-stone-500 font-light mb-2">Psicología Sanitaria & Terapia Intercultural Bilingüe</p>
+            <p class="text-[11px] text-stone-400 font-light">&copy; 2026 AK PSYCHE. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE NAVEGACIÓN Y CAMBIO DE IDIOMA -->
+    <script>
+        const translations = {
+            es: {
+                "hero-line1": "Terapia Psicológica",
+                "hero-line2": "Adaptada a ti",
+                "card1-title": "Situación personal",
+                "card1-desc": "Atención centrada en tus necesidades específicas y únicas.",
+                "card2-title": "País e idioma",
+                "card2-desc": "Sesiones en inglés y español, tanto online como presenciales en Madrid, España.",
+                "card3-title": "Cultura",
+                "card3-desc": "Apertura y sensibilidad a diversidad de contextos e ideologías",
+                "btn-more-info": "más info",
+                "home-name": "Alexia Kelsey, Psicóloga Sanitaria Bilingüe",
+                "home-short-bio": "Especializada en población adulta de diversidad cultural, en terapia individual y de pareja.",
+                "btn-know-more": "Sobre mí",
+                "welcome-tag": "El espacio",
+                "welcome-title": "Un espacio seguro donde explorar tu historia",
+                "welcome-text": "La terapia es un lugar de pausa, escucha y reconstrucción. Sin juicios, respetando tus tiempos y adaptada a tu realidad cultural y personal.",
+                "welcome-link": "Conocer más sobre mi enfoque",
+                "areas-tag": "Especialidades",
+                "areas-title": "¿En qué puedo acompañarte?",
+                "area1-title": "Psicología intercultural",
+                "area1-desc": "Identidad, pertenencia, duelo migratorio, choque cultural & parejas/familias multiculturales.",
+                "area2-title": "Ansiedad y depresión",
+                "area2-desc": "Herramientas para comprender el malestar, reducir la sobrecarga mental y recuperar el equilibrio emocional.",
+                "area3-title": "Vínculos & Autoestima",
+                "area3-desc": "Fortalecimiento de la relación contigo y con los demás desde el respeto y la autocompasión.",
+                "area4-title": "Transiciones Vitales",
+                "area4-desc": "Acompañamiento en cambios importantes de vida, decisiones complejas y búsqueda de sentido.",
+                "area5-title": "Relaciones familiares & pareja",
+                "area5-desc": "Abordaje de dinámicas relacionales complejas, comunicación asertiva y resolución de conflictos.",
+                "area6-title": "Etapa perinatal",
+                "area6-desc": "Acompañamiento psicológico durante el embarazo, posparto y en los desafíos de la maternidad/paternidad.",
+                "process-tag": "El proceso",
+                "process-title": "Cómo empezamos a trabajar",
+                "step1-title": "1. Primer contacto",
+                "step1-desc": "Escríbeme un mensaje para resolver tus dudas o agendar una consulta inicial sin compromiso.",
+                "step2-title": "2. Evaluación inicial",
+                "step2-desc": "Exploramos tu situación actual, lo que necesitas y cómo podemos trabajar juntas/os.",
+                "step3-title": "3. Proceso a tu ritmo",
+                "step3-desc": "Diseñamos un plan terapéutico flexible, adaptado a tus metas personales e idioma preferido.",
+                "cta-title": "¿Da el primer paso hacia tu bienestar?",
+                "cta-subtitle": "Sesiones disponibles en español e inglés, en modalidad online y presencial en Madrid.",
+                "cta-btn": "Agendar consulta"
+            },
+            en: {
+                "hero-line1": "Psychological Therapy",
+                "hero-line2": "Tailored to you",
+                "card1-title": "Personal situation",
+                "card1-desc": "Care centered on your specific and unique needs.",
+                "card2-title": "Country & language",
+                "card2-desc": "Sessions in English and Spanish, both online and in-person in Madrid, Spain.",
+                "card3-title": "Culture",
+                "card3-desc": "Openness and sensitivity to a diversity of contexts and worldviews",
+                "btn-more-info": "more info",
+                "home-name": "Alexia Kelsey, Bilingual Health Psychologist",
+                "home-short-bio": "Specialized in culturally diverse adult populations, in individual and couples therapy.",
+                "btn-know-more": "About me",
+                "welcome-tag": "The space",
+                "welcome-title": "A safe space to explore your story",
+                "welcome-text": "Therapy is a space for pause, listening, and rebuilding. Free of judgment, respecting your pace, and tailored to your cultural and personal reality.",
+                "welcome-link": "Learn more about my approach",
+                "areas-tag": "Specialties",
+                "areas-title": "How can I support you?",
+                "area1-title": "Intercultural Psychology",
+                "area1-desc": "Identity, belonging, migratory grief, culture shock & multicultural couples/families.",
+                "area2-title": "Anxiety & Depression",
+                "area2-desc": "Tools to understand distress, reduce mental overload, and restore emotional balance.",
+                "area3-title": "Relationships & Self-Worth",
+                "area3-desc": "Strengthening your relationship with yourself and others through respect and self-compassion.",
+                "area4-title": "Life Transitions",
+                "area4-desc": "Support through major life changes, complex decisions, and searching for direction.",
+                "area5-title": "Family & Couples Therapy",
+                "area5-desc": "Addressing complex relational dynamics, assertive communication, and conflict resolution.",
+                "area6-title": "Perinatal Stage",
+                "area6-desc": "Psychological support during pregnancy, postpartum, and the challenges of parenthood.",
+                "process-tag": "The process",
+                "process-title": "How we begin the process",
+                "step1-title": "1. Initial contact",
+                "step1-desc": "Send me a message to clarify any questions or schedule an initial consultation without commitment.",
+                "step2-title": "2. Initial evaluation",
+                "step2-desc": "We explore your current situation, your needs, and how we can work together.",
+                "step3-title": "3. Therapy at your pace",
+                "step3-desc": "We design a flexible therapeutic plan adapted to your personal goals and preferred language.",
+                "cta-title": "Take the first step towards your well-being",
+                "cta-subtitle": "Sessions available in Spanish and English, online and in-person in Madrid.",
+                "cta-btn": "Book a consultation"
+            }
+        };
+
+        let currentLang = 'es';
+
+        window.switchLanguage = function(lang) {
+            currentLang = lang;
+            const btnEs = document.getElementById('btn-lang-es');
+            const btnEn = document.getElementById('btn-lang-en');
+
+            if (lang === 'es') {
+                btnEs.className = 'px-2.5 py-1 rounded-full transition-all duration-200 bg-cream text-twilight font-semibold shadow-xs';
+                btnEn.className = 'px-2.5 py-1 rounded-full transition-all duration-200 hover:text-twilight';
+            } else {
+                btnEn.className = 'px-2.5 py-1 rounded-full transition-all duration-200 bg-cream text-twilight font-semibold shadow-xs';
+                btnEs.className = 'px-2.5 py-1 rounded-full transition-all duration-200 hover:text-twilight';
+            }
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        };
+
+        window.showPage = function(pageId) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            const navBtn = document.getElementById('nav-' + pageId);
+            if (navBtn) {
+                navBtn.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.showToast = function(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        };
+    </script>
+</body>
+</html>
